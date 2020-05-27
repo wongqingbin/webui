@@ -6,25 +6,26 @@
 import time
 
 import pytest
+from loguru import logger
 from selenium import webdriver
-from utils.logger import Logger
 
 
 class TestCase():
 
+    @pytest.mark.usefixtures('make_driver')
     @pytest.mark.parametrize('url', [('https://wongqingbin.github.io')])
     def test_demo1(self, make_driver, url):
         obj = make_driver  # 从conftest.py中获取对象
         try:
-            Logger().logger.info('info开始打开url')
-            Logger().logger.info(obj.open_url(url))
+            logger.info('info开始打开url')
+            obj.open_url(url)
             text = obj.search('hello world')
-            Logger().logger.info(text)
+            logger.info(text)
             assert text == 'hello world'
-            Logger().logger.info('end...')
+            logger.info('end...')
             time.sleep(3)
         except Exception as e:
-            Logger().logger.error(e)
+            logger.error(e)
 
     # @pytest.mark.parametrize('url', [('https://wongqingbin.github.io')])
     # def test_demo2(self, url):
@@ -36,6 +37,7 @@ class TestCase():
     #     el = element.send_keys('hello world')
     #     print(element.get_attribute('value'))
     #     time.sleep(5)
+
 
 if __name__ == "__main__":
     pytest.main('-s', '-q')

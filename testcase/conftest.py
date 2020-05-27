@@ -6,25 +6,27 @@
 import os
 
 import pytest
+from loguru import logger
 from selenium import webdriver
 
 from pages.main_page import MainPage
-from utils.logger import Logger
 
 
-@pytest.fixture()
+# "function" (default), "class", "module", "package" or "session"
+# function/函数级（测试用例）、class/类级（测试类）、module/模块级（测试模块—py文件）、session/会话级（整个测试执行会话）
+@pytest.fixture(scope='class')
 def make_driver():
     driver: webdriver = None
     CHROMEDRIVER_PATH = os.getcwd() + r'\libs\chromedriver.exe'
-    Logger().logger.info('CHROMEDRIVER路径: {0}'.format(CHROMEDRIVER_PATH))
+    logger.info('CHROMEDRIVER路径: {0}'.format(CHROMEDRIVER_PATH))
 
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH)
     driver.implicitly_wait(30)
     if driver:
-        Logger().logger.info('dirver创建成功success')
-        Logger().logger.info('全局隐式等待implicitly_wait: 30s')
+        logger.info('dirver创建成功success')
+        logger.info('全局隐式等待implicitly_wait: 30s')
     else:
-        Logger().logger.info('dirver创建失败fail')
+        logger.info('dirver创建失败fail')
     obj = MainPage(driver)
-    yield obj
+    yield obj  # 1.返回值; 2.运行分界线
     driver.quit()

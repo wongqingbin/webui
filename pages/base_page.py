@@ -3,10 +3,10 @@
 # File  : basepage.py
 # Author: wangqingbin8
 # Time  : 2020-05-25 16:00:57
+from loguru import logger
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-from utils.logger import Logger
 from utils.read_yaml import get_yaml_element
 
 
@@ -34,14 +34,12 @@ class BasePage:
                 key == By对象的定位方式, 类型string, 使用getattr()字符串反射调用By对象
                 value == 元素控件定位值, 类型string
         """
-        Logger().logger.info(locator)
         try:
             element = self.driver.find_element(by=getattr(
                 By, locator[0]), value=locator[1])
             return element
         except Exception as e:
-            Logger().logger.error(e)
+            logger.error(e)
 
     def get_value(self, element):
-        Logger().logger.info(element)
         return element.get_attribute('value')

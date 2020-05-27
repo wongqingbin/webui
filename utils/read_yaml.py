@@ -4,11 +4,12 @@
 # Author: wangqingbin8
 # Time  : 2020-05-25 15:44:31
 import os
-
 import yaml
 
-# from utils.logger import Logger
-from utils.logger import Logger
+# from logger import Loggings
+from loguru import logger
+
+# logger = Loggings()
 
 def get_yaml_data(path):
     """读取yaml数据
@@ -26,10 +27,10 @@ def get_yaml_data(path):
                 data = yaml.full_load(f)  # full_load加载全部数据
                 return data
             except Exception as e:
-                Logger().logger.error('YAML文件语法格式错误: {}'.format(e))
+                logger.error('YAML文件语法格式错误: {}'.format(e))
                 return None
     else:
-        Logger().logger.error('找不到文件：{0}'.format(path))
+        logger.error('找不到文件：{0}'.format(path))
         return None
 
 def get_yaml_element(path):
@@ -43,7 +44,7 @@ def get_yaml_element(path):
             names.append(data.pop('name'))
             tmp = (data.pop('selector'), data.pop('value'))
         except Exception as e:
-            Logger().logger.error(e)
+            logger.error(e)
             return None
         locators.append(tmp)
     results = dict(zip(names, locators))
@@ -51,13 +52,13 @@ def get_yaml_element(path):
 
 
 if __name__ == "__main__":
-    data = get_yaml_element('data/search_element.yaml')
-    print(data)
-    print(1111111111)
+    data = get_yaml_element('data/elements.yaml')
+    logger.info(data)
+    logger.info(1111111111)
     locator = data['search']
-    print(locator)
-    print(111111111111)
-    print(locator[0], locator[1])
+    logger.info(locator)
+    logger.info(111111111111)
+    logger.info(locator[0], locator[1])
     # print(data[0])
     # print(type(data))  # list
     # data = dict(data)

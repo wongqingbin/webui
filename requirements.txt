@@ -1,4 +1,5 @@
 autopep8==1.5.2
+loguru==0.5.0
 selenium==3.141.0
 pytest==5.4.2
 allure-pytest==2.8.15
