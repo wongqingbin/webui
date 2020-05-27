@@ -1,0 +1,8 @@
+- name: search
+  error: error
+  selector: CSS_SELECTOR
+  value: body > div.cover-wrapper > cover > div.cover-body > div.b > div.m_search > form > input
+
+- name: aaaaaaaaaaaaaaa
+  selector: eeeeee
+  value: rttttttttttt
