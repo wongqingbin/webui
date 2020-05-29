@@ -3,8 +3,11 @@
 # File  : basepage.py
 # Author: wangqingbin8
 # Time  : 2020-05-25 16:00:57
-## desc: https://www.selenium.dev/documentation/zh-cn/getting_started/
-## desc: https://python-selenium-zh.readthedocs.io/zh_CN/latest/
+# desc: https://www.selenium.dev/documentation/zh-cn/getting_started/
+# desc: https://python-selenium-zh.readthedocs.io/zh_CN/latest/
+import os
+import time
+
 from loguru import logger
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
@@ -121,3 +124,27 @@ class BasePage:
 
         # 程序死等 time.sleep()
         pass
+
+    def save_png(self):
+        picture_time = time.strftime(
+            "%Y-%m-%d--%H_%M_%S", time.localtime(time.time()))
+        directory_time = time.strftime("%Y-%m-%d", time.localtime(time.time()))
+        try:
+            File_Path = os.getcwd() + '\\images\\' + directory_time + '\\'
+            if not os.path.exists(File_Path):
+                os.makedirs(File_Path)
+        except Exception as e:
+            logger.error("创建截图目录失败: {}".format(e))
+        try:
+            flag = self.driver.save_screenshot(
+                '.\\images\\' + directory_time + '\\' + picture_time + '.png')
+            if flag:
+                logger.info('截图保存成功{}'.format(flag))
+        except Exception as e:
+            logger.error("截图失败: {}".format(e))
+        try:
+            # 返回allure存储截图格式
+            return self.driver.get_screenshot_as_png()
+        except Exception as e:
+            logger.error('allure截图保存失败: {}'.format(e))
+            return

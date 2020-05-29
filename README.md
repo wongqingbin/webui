@@ -5,15 +5,15 @@
 ```bash
 ####### https://docs.qameta.io/allure/ #########
 # 1. pytest运行输出allure results
-pytest --alluredir=/allure/results
+pytest --alluredir=allure/results
 
 # 2. allure 查看预览报告
-allure serve /allure/results
+allure serve allure/results
 
 # 3. allure 生成静态HTML报告
 # 3.1 安装allure命令行版并配置环境变量https://github.com/allure-framework/allure2/releases
 # allure generate <directory-with-results> -o <directory-with-report> --clean
-allure generate /allure/results -o /allure/report --clean
+allure generate allure/results -o allure/report --clean
 ```
 
 ## pytest-html
