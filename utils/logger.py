@@ -15,9 +15,9 @@ class Loggings:
                encoding="utf-8",
                retention="30 days",
                compression="zip",
-               enqueue=True
                )
     # 类单例模式运行logger
+
     def __new__(cls, *args, **kwargs):
         if not cls.__instance:
             cls.__instance = super(Loggings, cls).__new__(cls, *args, **kwargs)

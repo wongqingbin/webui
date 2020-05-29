@@ -14,7 +14,7 @@ class TestCase():
 
     @pytest.mark.usefixtures('make_driver')
     @pytest.mark.parametrize('url', [('https://wongqingbin.github.io')])
-    def test_demo1(self, make_driver, url):
+    def test_demo(self, make_driver, url):
         obj = make_driver  # 从conftest.py中获取对象
         try:
             logger.info('info开始打开url')
@@ -26,6 +26,11 @@ class TestCase():
             time.sleep(3)
         except Exception as e:
             logger.error(e)
+
+    def test_2demo(self, make_driver):
+        logger.debug(make_driver)
+        logger.info('test_demo 2')
+
 
     # @pytest.mark.parametrize('url', [('https://wongqingbin.github.io')])
     # def test_demo2(self, url):
