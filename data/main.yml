@@ -1,0 +1,6 @@
+# AI中台首页元素列表[]
+
+- name: enter_face  # 首页中的人脸识别-立即体验按钮
+  error: error
+  selector: CSS_SELECTOR
+  value: "#app > div.main-wrap > div > div.cont > div:nth-child(8) > div > div.panel > div:nth-child(1) > div.btns > span:nth-child(1)"

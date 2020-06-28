@@ -3,11 +3,13 @@
 # Created by wangqingbin8 at 2020-06-28 11:46
 """Description"""
 from pages.base_page import BasePage
+from utils.read_yaml import get_yaml_element
 
 
 class FacePage(BasePage):
     def __init__(self, driver):
         super(FacePage, self).__init__(driver)
+        self.data = get_yaml_element('data/face.yml')
 
     def slide_el(self):
         """滑动到和元素相同位置"""

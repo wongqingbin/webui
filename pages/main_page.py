@@ -5,12 +5,14 @@
 # Time  : 2020-05-25 16:01:36
 from pages.base_page import BasePage
 from pages.face_page import FacePage
+from utils.read_yaml import get_yaml_element
 
 
 class MainPage(BasePage):
 
     def __init__(self, driver):
         self._driver = driver
+        self.data = get_yaml_element('data/main.yml')
         super().__init__(driver)
 
     def open_url(self, url):
