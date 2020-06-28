@@ -13,7 +13,6 @@ from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions, wait
-from selenium.webdriver.support.wait import WebDriverWait
 
 from utils.read_yaml import get_yaml_element
 
@@ -22,7 +21,7 @@ class BasePage:
 
     def __init__(self, driver: webdriver):
         self.data = get_yaml_element('data/elements.yaml')
-        self.driver = driver
+        self._driver = driver
 
     def find_element(self, locator: dict):
         """
@@ -42,8 +41,9 @@ class BasePage:
                 key == By对象的定位方式, 类型string, 使用getattr()字符串反射调用By对象
                 value == 元素控件定位值, 类型string
         """
+        logger.info(f'locator: {locator}')
         try:
-            element = self.driver.find_element(by=getattr(
+            element = self._driver.find_element(by=getattr(
                 By, locator[0]), value=locator[1])
             return element
         except Exception as e:
@@ -58,7 +58,7 @@ class BasePage:
     def get_alert(self):
         # alerts、confirms、prompts等对话框
         # TODO alter对象 可以做确定、忽略、阅读提示文本或者甚至输入prompt
-        # alert = self.driver.switch_to_alert()
+        # alert = self._driver.switch_to_alert()
 
         # 自动确认alter弹窗
         # Wait for the alert to be displayed and store it in a variable
@@ -72,7 +72,7 @@ class BasePage:
         # Wait for the alert to be displayed
         wait.until(expected_conditions.alert_is_present())
         # Store the alert in a variable for reuse
-        alert = driver.switch_to.alert
+        alert = self._driver.switch_to.alert
         # Store the alert text in a variable
         text = alert.text
         # Press the Cancel button
@@ -82,7 +82,7 @@ class BasePage:
         # Wait for the alert to be displayed
         wait.until(expected_conditions.alert_is_present())
         # Store the alert in a variable for reuse
-        alert = Alert(driver)
+        alert = Alert(self._driver)
         # Type your message
         alert.send_keys("Selenium")
         # Press the OK button
@@ -91,36 +91,36 @@ class BasePage:
     def events(self):
         """ 示例 """
         # 浏览器向前
-        self.driver.forward()
+        self._driver.forward()
         # 浏览器向后
-        self.driver.back()
+        self._driver.back()
         # And now output all the available cookies for the current URL
-        self.driver.get_cookies()
+        self._driver.get_cookies()
         # 获取当前url
-        self.driver.current_url
+        self._driver.current_url
         # 获取当前url的网页标题
-        self.driver.title
+        self._driver.title
         # 刷新页面
-        self.driver.refresh()
+        self._driver.refresh()
         # 获取当前窗口(返回窗口ID)
-        self.driver.current_window_handle
+        self._driver.current_window_handle
         # 切换窗口或标签页  PS:该特性适用于 Selenium 4 及其后续版本
-        # self.driver.switch_to.new_window('window')  # 'tab'
+        # self._driver.switch_to.new_window('window')  # 'tab'
         # 获取窗口大小
         # 或者存储尺寸并在以后查询它们
-        size = self.driver.get_window_size()
+        size = self._driver.get_window_size()
         width = size.get("width")
         height = size.get("height")
         # 最大化窗口
-        self.driver.maximize_window()
+        self._driver.maximize_window()
 
     def _waits(self):
         # # 显示wait 使用expected_condition类处理各种情况
-        # wait = WebDriverWait(driver, 10)
+        # wait = WebDriverWait(_driver, 10)
         # element = wait.until(EC.element_to_be_clickable((By.ID, 'someid')))
 
         # # 隐式等待
-        # self.driver.implicitly_wait(10) # seconds
+        # self._driver.implicitly_wait(10) # seconds
 
         # 程序死等 time.sleep()
         pass
@@ -136,7 +136,7 @@ class BasePage:
         except Exception as e:
             logger.error("创建截图目录失败: {}".format(e))
         try:
-            flag = self.driver.save_screenshot(
+            flag = self._driver.save_screenshot(
                 '.\\images\\' + directory_time + '\\' + picture_time + '.png')
             if flag:
                 logger.info('截图保存成功{}'.format(flag))
@@ -144,7 +144,29 @@ class BasePage:
             logger.error("截图失败: {}".format(e))
         try:
             # 返回allure存储截图格式
-            return self.driver.get_screenshot_as_png()
+            return self._driver.get_screenshot_as_png()
         except Exception as e:
             logger.error('allure截图保存失败: {}'.format(e))
             return
+
+    def switch_tag(self, num=-1):
+        """获取当前所有标签页, 并进入新开页"""
+        tags = self._driver.window_handles
+        logger.info(f'获取浏览器所有窗口: {tags}')
+        self._driver.switch_to.window(tags[num])
+        return tags
+
+    def close_tag(self):
+        """关闭当前活动窗口"""
+        handle = self._driver.current_window_handle  # current_window_handle 被@property修饰为属性，无需加()调用
+        logger.info(f'关闭当前窗口handle: {handle}')
+        self._driver.close()
+
+    def upload_file(self, locator: dict, path):
+        """
+        文件上传：
+            1. input标签上传  直接send_keys()
+            2. 非input标签上传  第三方库
+        """
+        el = self.find_element(locator)
+        el.send_keys(path)

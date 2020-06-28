@@ -4,15 +4,17 @@
 # Author: wangqingbin8
 # Time  : 2020-05-25 16:01:36
 from pages.base_page import BasePage
+from pages.face_page import FacePage
 
 
 class MainPage(BasePage):
 
     def __init__(self, driver):
+        self._driver = driver
         super().__init__(driver)
 
     def open_url(self, url):
-        self.driver.get(url)
+        self._driver.get(url)
         # 通过代理的方式打开url
         #PROXY = "<HOST:PORT>"
         # webdriver.DesiredCapabilities.CHROME['proxy'] = {
@@ -22,11 +24,11 @@ class MainPage(BasePage):
         #    "proxyType": "MANUAL",
         #}
         #self.driver.get(url)
-        return self.driver.current_url
+        return self._driver.current_url
 
-    def search(self, keyword):
-        locator = self.data.get('search')
+    def enter_face(self):
+        locator = self.data.get('enter_face')
         element = self.find_element(locator)
-        element.send_keys(keyword)
-        text = self.get_value(element)
-        return text
+        element.click()
+        self.switch_tag()  # 切换新开页
+        return FacePage(self._driver)

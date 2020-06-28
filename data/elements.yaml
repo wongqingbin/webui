@@ -1,8 +1,17 @@
-- name: search
+- name: enter_face
   error: error
   selector: CSS_SELECTOR
-  value: body > div.cover-wrapper > cover > div.cover-body > div.b > div.m_search > form > input
+  value: "#app > div.main-wrap > div > div.cont > div:nth-child(8) > div > div.panel > div:nth-child(1) > div.btns > span:nth-child(1)"
 
-- name: aaaaaaaaaaaaaaa
-  selector: eeeeee
-  value: rttttttttttt
+- name: send_image_url
+  selector: CSS_SELECTOR
+  value: "#app > div.main-wrap > div > div.ai-official-index-facecheck.demo-wrapper.demo > div.ai-official-index-face-analysis.component-cont.demo > div.left > div > div.opt > div > div.flex > input"
+
+- name: detect_img_url
+  selector: CSS_SELECTOR
+  value: "#app > div.main-wrap > div > div.ai-official-index-facecheck.demo-wrapper.demo > div.ai-official-index-face-analysis.component-cont.demo > div.left > div > div.opt > div > div.flex > div:nth-child(2)"
+
+- name: upload_file
+  selector: CSS_SELECTOR
+  value: "#app > div.main-wrap > div > div.ai-official-index-facecheck.demo-wrapper.demo > div.ai-official-index-face-analysis.component-cont.demo > div.left > div > div.opt > div > div.flex > div:nth-child(4) > input"
+

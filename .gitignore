@@ -132,3 +132,4 @@ logs/logger.log
 report.html
 allure
 images
+app/

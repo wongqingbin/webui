@@ -3,7 +3,6 @@
 # File  : logger.py
 # Author: wangqingbin8
 # Time  : 2020-05-25 17:12:59
-import os
 
 from loguru import logger
 
@@ -16,6 +15,7 @@ class Loggings:
                retention="30 days",
                compression="zip",
                )
+
     # 类单例模式运行logger
 
     def __new__(cls, *args, **kwargs):

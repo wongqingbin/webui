@@ -4,10 +4,11 @@
 # Author: wangqingbin8
 # Time  : 2020-05-25 15:44:31
 import os
-import yaml
 
+import yaml
 # from logger import Loggings
 from loguru import logger
+
 
 # logger = Loggings()
 
@@ -32,6 +33,7 @@ def get_yaml_data(path):
     else:
         logger.error('找不到文件：{0}'.format(path))
         return None
+
 
 def get_yaml_element(path):
     datas = get_yaml_data(path)
