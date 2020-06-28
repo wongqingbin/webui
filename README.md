@@ -19,13 +19,13 @@ allure generate allure/results -o allure/report --clean
 ## pytest-html
 
 ```bash
-# 独立HTML单文件报告
+# 独立HTML单文件报告(pytest-html)
 pytest --html=report.html --self-contained-html
 ```
 
 ## pytest自动查找收集用例的规则
 
-```python
+```txt
 1. file name：test_*.py 或者 *test.py
 2. class name：Test* 且类内没有 __init__ 函数
 3. function name: test_*
