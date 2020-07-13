@@ -16,7 +16,13 @@
  * PageObject设计模式
 ```
 
-## allure
+## pytest调试（运行显示print、logger日志 -s）
+
+```bash
+pytest -s -q
+```
+
+## allure报告模式运行
 
 ```bash
 ####### https://docs.qameta.io/allure/ #########
@@ -32,7 +38,7 @@ allure serve allure/results
 allure generate allure/results -o allure/report --clean
 ```
 
-## pytest-html
+## pytest-html简单静态报告模式运行
 
 ```bash
 # 独立HTML单文件报告(pytest-html)
@@ -47,8 +53,36 @@ pytest --html=report.html --self-contained-html
 3. function name: test_*
 ```
 
-## pytest运行显示print、logger日志 -s
-
-```bash
-pytest -s -q
+## tree
+```text
+.
+|-- README.md
+|-- allure                          # allure测试报告
+|   |-- report
+|   |-- results
+|-- data                            # 关键字驱动的case数据
+|   `-- README.md
+|-- debug.log
+|-- images                          # selenium截图目录
+|-- libs                            # 第三方库或项目其他依赖
+|   `-- chromedriver.exe            # selenium的Chromedriver(83版本号)
+|-- logs
+|   `-- logger.log                  # 运行日志
+|-- pages                           # PO封装之page页面
+|   |-- __init__.py
+|   |-- app_page.py                 # driver初始化
+|   |-- base_page.py                # 基类，公共方法
+|   |-- elements.yml                # 数据分离之页面元素定位信息集合
+|   |-- home_page.py                # 业务页面
+|   |-- main_page.py                # 业务主页面
+|   `-- search_page.py              # 业务页面
+|-- report.html                     # pytest-html生成的简单静态页面报告
+|-- requirements.txt                # 项目的pip依赖库
+|-- testcase                        
+|   |-- __init__.py
+|   |-- conftest.py                 # fixture
+|   `-- test_case.py                # 执行用例
+`-- utils
+    |-- __init__.py
+    `-- logger.py                   # loguru日志库的再次封装
 ```
