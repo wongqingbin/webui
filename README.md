@@ -7,6 +7,13 @@
  * 数据分离
  * PO封装
  * 自定义测试报告
+技术栈：
+ * python
+ * selenium
+ * pytest
+ * allure
+ * yaml
+ * PageObject设计模式
 ```
 
 ## allure
