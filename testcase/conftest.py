@@ -18,7 +18,6 @@ CHROMEDRIVER_PATH = os.getcwd() + r'\libs\chromedriver.exe'
 # function/函数级（测试用例）、class/类级（测试类）、module/模块级（测试模块—py文件）、session/会话级（整个测试执行会话）
 @pytest.fixture(scope='class')
 def make_driver():
-    driver: webdriver = None
     logger.info('CHROMEDRIVER路径: {0}'.format(CHROMEDRIVER_PATH))
 
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH)

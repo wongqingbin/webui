@@ -1,17 +1,17 @@
-#!/usr/bin/env python
-# -*- encoding: utf-8 -*-
-# File  : basepage.py
-# Author: wangqingbin8
-# Time  : 2020-05-25 16:00:57
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# Created by wangqingbin8 at 2020-05-25 16:00:57
 # desc: https://www.selenium.dev/documentation/zh-cn/getting_started/
 # desc: https://python-selenium-zh.readthedocs.io/zh_CN/latest/
 import os
 import time
+from typing import Dict
 
 from loguru import logger
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions, wait
 
 
@@ -20,7 +20,7 @@ class BasePage:
     def __init__(self, driver: webdriver):
         self._driver = driver
 
-    def find_element(self, locator: dict):
+    def find_element(self, locator: Dict):
         """
         By对象定位方式:
             ID = "id"
@@ -41,15 +41,16 @@ class BasePage:
         logger.info(f'locator: {locator}')
         try:
             element = self._driver.find_element(by=getattr(
-                By, locator[0]), value=locator[1])
-            return element
+                By, locator['selector'].upper()), value=locator['value'])
         except Exception as e:
             logger.error(e)
+        else:
+            return element
 
     def find_elements(self, locator: dict):
         pass
 
-    def get_value(self, element):
+    def get_value(self, element: WebElement):
         return element.get_attribute('value')
 
     def get_alert(self):
@@ -109,7 +110,6 @@ class BasePage:
         width = size.get("width")
         height = size.get("height")
         # 最大化窗口
-        self._driver.maximize_window()
 
     def _waits(self):
         # # 显示wait 使用expected_condition类处理各种情况

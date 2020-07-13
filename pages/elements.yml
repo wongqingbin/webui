@@ -1,0 +1,45 @@
+# 所有元素集合
+conf:
+  url: https://wongqingbin.github.io/
+
+main:
+  search: # 自定义元素名称 标识
+    selector: XPATH
+    value: /html/body/div[1]/cover/div[1]/div[2]/div[1]/form/input
+  categories:
+    selector: ID
+    value: categories
+  tags:
+    selector: ID
+    value: tags
+  more:
+    selector: XPATH
+    value: /html/body/div[1]/cover/div[2]/i
+
+search:
+  close:
+    selector: XPATH
+    value: //*[@id="u-search"]/div[1]/header/a
+
+home: # 网站https://wongqingbin.github.io/下拉后的主页
+  frieza:
+    selector: XPATH
+    value: /html/body/div[1]/header/div/div/div[2]/a
+  home:
+    selector: ID
+    value: home
+  article:
+    selector: XPATH
+    value: /html/body/div[1]/header/div/div/div[2]/div[1]/ul/li[2]/a
+  categories:
+    selector: ID
+    value: categories
+  tags:
+    selector: ID
+    value: tags
+  archives:
+    selector: ID
+    value: archives
+  more:
+    selector: XPATH
+    value: /html/body/div[1]/header/div/div/div[2]/div[1]/ul/li[6]/a

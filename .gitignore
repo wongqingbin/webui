@@ -128,8 +128,7 @@ dmypy.json
 .vscode/
 
 logs/logger.log
-
 report.html
 allure
 images
-app/
+debug.log

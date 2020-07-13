@@ -19,42 +19,47 @@ class TestCase(object):
     @allure.issue("http://www.jira.com")
     @allure.testcase("http://www.testlink.com")
     @pytest.mark.usefixtures('make_driver')
-    @pytest.mark.parametrize('url', [('http://jddbrain.jdfmgt.com')])
-    def test_demo(self, make_driver, url):
+    # @pytest.mark.parametrize('url', [('http://jddbrain.jdfmgt.com')])
+    def test_search(self, make_driver):
         """
         用例描述：这是用例描述，Test case 01，描述本人
         """
         obj_main = make_driver  # 从conftest.py中获取对象
         # try:
         logger.info('打开网页')
-        obj_main.open_url(url)
-        logger.info('进入人脸识别-立即体验')
-        obj_face = obj_main.enter_face()
-        logger.info('输入图片地址')
-        obj_face.send_img_url()
-        logger.info('点击检测url按钮')
-        obj_face.click_url()
+        obj_main.open_url()
+        obj_main.save_png()
+        logger.info('搜索内容')
+        obj_search = obj_main.search('python')
         time.sleep(3)
+        obj_search.save_png()
+        logger.info('关闭搜索框')
+        obj_search.close()
+        time.sleep(1)
         # assert text == 'hello world'
         # # with allure.step('添加失败截图...'):
         # allure.attach(obj_face.save_png(), "输入hello world失败", allure.attachment_type.PNG)
-        logger.info('上传图片测试')
-        obj_face.local_file(r'C:\Users\wangqingbin8\Desktop\httpserver\1.jpg')
-        time.sleep(3)
-        obj_face.close_tag()
-        time.sleep(3)
         logger.info('end...')
         # except Exception as e:
         #     logger.error(e)
         #     allure.attach(obj_face.save_png(), "输入hello world失败", allure.attachment_type.PNG)
 
-    # @allure.story('2这里是story')
-    # def test_2demo(self, make_driver):
-    #     """
-    #     用例描述：这是用例描述，Test2
-    #     """
-    #     logger.debug(make_driver)
-    #     logger.info('test_demo 2')
+    @allure.story('2这里是story')
+    def test_home(self, make_driver):
+        """
+        用例描述：这是用例描述，Test2
+        """
+        obj_main = make_driver
+        obj_home = obj_main.more()
+        logger.info('分类列表')
+        obj_home.categories()
+        obj_home.save_png()
+        logger.info('标签列表')
+        obj_home.tags()
+        obj_home.save_png()
+        logger.info('系列文章')
+        obj_home.archives()
+        obj_home.save_png()
 
     # @pytest.mark.parametrize('url', [('https://wongqingbin.github.io')])
     # def test_demo2(self, url):
